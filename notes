@@ -1,0 +1,109 @@
+First impressions:
+============================================================================
+I believe the main problems with learning were:
+- Still having difficulties grasping the ecosystem structure,
+therefore never returning futures or polls at the right place.
+If I had to draw a representation of how my code is currently
+executed, it would probably take me about 10 mins (and it would
+probably be partly wrong but that's not important for now #beginner).
+
+I believe that the fact that it is so hard to hard a mental
+picture of what is going on with my code isn't a good thing.
+
+I don't think it comes from the structure of the framework because
+after talking to a friend of mine, lot of the concepts and struct are
+similar to libraries in other languages (he showed me some python code)
+and those don't seem to suffer from this harsh learning curve.
+
+I believe transparency on the internals mechanics of the library is
+missing.
+In Rust I'm much more used to understanding what it going with the
+executing. By that I mean I can mentally picture an approximation of how
+the code is going to be executed. I know that in reality the code will
+get optimized, that some of the libraries method I call might be huge
+but overall, none of these modification alter the flow of execution of
+the code I write and none maintain hidden states (like a parallel
+program executing along my code).
+I know that the goal of tokio is to schedule my stuff therefore it is
+necessary for it to do all of that and I don't really have anything
+against it as long as I can picture what tokio is doing for me in my
+back.
+I mean for example I wrote quite a bunch of scripts in nodejs for work
+and even though there's a magic scheduler doing all the callback calling
+"in my back", it doesn't feel obscure (once you got how to write
+asynchronous code of course).
+I believe that this feeling arises from the fact the tokio is sharing a
+bit more internal mechanisms than nodejs does, because it is looks like
+it's been built to allow the building of other libraries that would make
+it easy to use?
+
+Let me explain.
+In nodejs, you have a magic scheduler, but as a beginner
+you don't even know that it exists. What you do know is that you have a
+bunch of functions with callbacks that will do their job and call you
+back. Simple. Send an HTTP request, then call my function with the
+result.
+
+In tokio, you see the scheduler because you start it (which is fine). The
+first example you can read, shows you how to open a socket, accept
+connections, write them a message and then close it.
+That's fine as a hello world, but what I personally find frustrating with
+this example is that it gives no room for easy customisation. By that I mean
+even after further reading the tutorial, you can hardly make something
+simple out of this code snippet. Like for example accept the socket, read
+a message, write a response and close the socket.
+
+I mean the next tutorial pages tell you about the execution model, the
+future model, the ... Hey wait the tutorial changed! Well that task
+stuff was interesting.
+
+Well now my argument is getting nowhere because I'm lost.
+
+What I believe would be great for the tokio learning experience would be
+a basic string codec (sending a receiving strings) so that you can start
+creating easily a client and a server exchanging strings. That would
+remove a lot of the boiler plate codec stuff required to build up stuff
+and help focus on the asynchronous programming I believe. (Or even a
+generic structure codec based on basic serialization, that would be
+awesome). If those ideas are already implemented, I might look like a
+fool but that would be a great thing. They would just need to be
+displayed in the tutorial for visibility.
+
+What I believe is that a tutorial intended for beginners should be
+articulated a bit like that:
+- Learn asynchronous programing with closures only (no struct, no
+complex function signature, no codec, no scheduler, just asynchronous
+actions and their callbacks). This part should contain multiple
+examples, more and more complex (but still readable of course).
+- Then learn about codecs/streams to enrich and structure your data
+flow.
+- Then learn about the internal mechanics (futures, tasks, reactors, ...)
+in a going deeper section.
+
+The thing is that I believe that tokio lacks some tools to be easily
+usable out of the box. But that might be fine. I mean maybe the goal of
+the library is to lay the complicated foundation that will allow other
+libraries to create easy to use/maybe less powerful APIs.
+
+Too much talk not enough code. I believe I grasped something about that
+tutorial thing that might be lacking and I'm gonna try to do something
+about it.
+
+Confusing errors:
+============================================================================
+fn program(port: u16) -> impl Future<Item = (), Error = tokio::io::Error>
+
+error[E0271]: type mismatch resolving `<impl futures::Future as futures::Future>::Error == ()`
+  --> src/main.rs:52:5
+   |
+52 |     tokio::run(program(port));
+   |     ^^^^^^^^^^ expected struct `std::io::Error`, found ()
+   |
+   = note: expected type `std::io::Error`
+              found type `()`
+   = note: required by `tokio::run`
+
+Confusing: looks like tokio::run wants std::io::Error but found (), when it is the opposite.
+
+There are more like this, the first one is the most confusing. Unfortunately, you get used to it ...
+
