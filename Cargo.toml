@@ -1,0 +1,9 @@
+[package]
+name = "tokio_test_chat"
+version = "0.1.0"
+authors = ["Igor Valet <igor_valet@hotmail.com>"]
+
+[dependencies]
+tokio = "0"
+futures = "0"
+bytes = "0"
