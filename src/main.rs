@@ -7,9 +7,9 @@ use tokio::io;
 use tokio::net::{TcpListener, TcpStream};
 use tokio::prelude::*;
 
-use futures::{future, Future, Stream};
+use bytes::{BufMut, Bytes, BytesMut};
 use futures::sync::mpsc;
-use bytes::{BytesMut, Bytes, BufMut};
+use futures::{future, Future, Stream};
 
 type Tx = mpsc::UnboundedSender<Bytes>;
 type Rx = mpsc::UnboundedReceiver<Bytes>;
@@ -95,27 +95,28 @@ fn program(port: u16) -> impl Future<Item = (), Error = ()> {
         // Start listening on the socket
         let addr = format!("127.0.0.1:{}", port).parse().unwrap();
         let listener = TcpListener::bind(&addr).unwrap();
-        let client_acceptor = listener.incoming().for_each(|socket| {
-            println!("accepted socket; addr={:?}", socket.peer_addr().unwrap());
+        let client_acceptor = listener
+            .incoming()
+            .for_each(|socket| {
+                println!("accepted socket; addr={:?}", socket.peer_addr().unwrap());
 
-            let stream = ByteCodec::new(socket);
-            tokio::spawn(
-                stream.for_each(|msg| {
-                    match String::from_utf8(msg.to_vec()) {
-                        Ok(s) => println!("{}", s),
-                        Err(e) => println!("String::from_utf8 error: {:?}", e),
-                    };
-                    future::ok(())
-                })
-                .map_err(|err| {
-                    println!("accept error = {:?}", err);
-                })
-            );
-            future::ok(())
-        })
-        .map_err(|err| {
-            println!("accept error = {:?}", err);
-        });
+                let stream = ByteCodec::new(socket);
+                tokio::spawn(
+                    stream
+                        .for_each(|msg| {
+                            match String::from_utf8(msg.to_vec()) {
+                                Ok(s) => println!("{}", s),
+                                Err(e) => println!("String::from_utf8 error: {:?}", e),
+                            };
+                            future::ok(())
+                        }).map_err(|err| {
+                            println!("accept error = {:?}", err);
+                        }),
+                );
+                future::ok(())
+            }).map_err(|err| {
+                println!("accept error = {:?}", err);
+            });
         tokio::spawn(client_acceptor);
         println!("server running on localhost:{}", port);
         Ok(Async::Ready(()))
