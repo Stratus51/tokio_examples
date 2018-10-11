@@ -7,3 +7,16 @@ authors = ["Igor Valet <igor_valet@hotmail.com>"]
 tokio = "0"
 futures = "0"
 bytes = "0"
+bincode = "1"
+
+[[bin]]
+name = "main"
+path = "src/main.rs"
+
+[[bin]]
+name = "dumb_server"
+path = "src/dumb/server.rs"
+
+[[bin]]
+name = "dumb_client"
+path = "src/dumb/client.rs"
