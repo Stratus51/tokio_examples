@@ -1,5 +1,12 @@
-First impressions:
+Impressions
 ============================================================================
+
+Pretty much ranting that I can read to understand... what I don't understand?
+Nothing really interesting unless you wanna read thoughts written on the top
+of my head during my coding session (or rather just after, in general).
+
+First impressions:
+----------------------------------------------------------------------------
 I believe the main problems with learning were:
 - Still having difficulties grasping the ecosystem structure,
 therefore never returning futures or polls at the right place.
@@ -89,6 +96,52 @@ Too much talk not enough code. I believe I grasped something about that
 tutorial thing that might be lacking and I'm gonna try to do something
 about it.
 
+Next:
+----------------------------------------------------------------------------
+Funny to read back all of that. Guess I was pretty tired that day ranting about
+the framework structure. After writing that "dumb" example, it now seems pretty
+simple to me.
+
+But I believe I was right about the documentation. It really is a maze, and
+understanding what the objects you are handling can cost you quite a
+documentation pages to open. And that's when you already know where to find the
+documentation of your object.
+
+In fact, tokio::prelude is great. But used in the guide example, it hides the
+module hierarchy. You then just never know where your object come from and
+instead of being able to move in the library documentation to forge yourself
+an understanding of its structure (what is where, what depends on what, what
+was built on what), you just end up googling your way around.
+
+I mean tokio::prelude is quite convenient, if you already know what you need
+from the library and don't want to be bothered by cumbersome namespaces. But
+I'm not too sure it is a great thing to include in the tutorials, unless the
+tutorial somehow describes enough of the methods and types made available by
+the prelude to make it useless to have to move through the library to build
+basic applications (so that the user has the feeling he can build something
+by himself when the tutorial's not there, and find the motivation to go
+through the library when he needs more tooling for advanced stuff).
+
+But yeah, as I said, I think I'm starting to grasp "how to" of the lib. Now I
+think I'll just try and make a tons of small examples to learn about the
+mechanisms around the futures. I think thoses examples will then allow me to
+have basic usage examples of the types, trait and methods to serve as an
+other source of documentation, hopefully less confusing than the docs.
+
+Oh and I believe one of the reasons I got confused (in addition to the hard
+to read docs) was that I tended to still think like I was programming in a
+synchronous way (because I was in Rust maybe?). But thanks to a few days
+of Typescript I'm back to asynchronous mode. Let's see where we can get from
+there.
+
+Ah and be fair I just found out there were line and bytes codec already
+included in the library and that my ranting regarding that was quite unfair.
+So I apologize, even though I still think these codecs should be exposed
+in the tutorials, and showed used. I think that would be a better approach
+than just explaining their implementation (that could be done afterwards).
+
+And I might share those examples on github... Maybe.
+
 Confusing errors:
 ============================================================================
 fn program(port: u16) -> impl Future<Item = (), Error = tokio::io::Error>
@@ -106,4 +159,3 @@ error[E0271]: type mismatch resolving `<impl futures::Future as futures::Future>
 Confusing: looks like tokio::run wants std::io::Error but found (), when it is the opposite.
 
 There are more like this, the first one is the most confusing. Unfortunately, you get used to it ...
-
