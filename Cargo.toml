@@ -1,5 +1,5 @@
 [package]
-name = "tokio_test_chat"
+name = "tokio-examples"
 version = "0.1.0"
 authors = ["Igor Valet <igor_valet@hotmail.com>"]
 
