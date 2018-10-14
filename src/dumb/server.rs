@@ -8,6 +8,8 @@ use futures::{Stream};
 // We need this trait declaration to have the map_err on our futures
 use futures::{Future};
 
+// Usage:
+// You can telnet that server (telnet 127.0.0.1 12345) and send it messages
 fn main() {
     // Configuration
     let port = 12345;
