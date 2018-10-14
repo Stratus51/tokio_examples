@@ -2,7 +2,7 @@ Pretty much ranting that I can read to understand... what I don't understand?
 Nothing really interesting unless you wanna read thoughts written on the top
 of my head during my coding session (or rather just after, in general).
 
-First impressions:
+First impressions: (beware, quite some rant)
 ============================================================================
 I believe the main problems with learning were:
 - Still having difficulties grasping the ecosystem structure,
@@ -93,7 +93,7 @@ Too much talk not enough code. I believe I grasped something about that
 tutorial thing that might be lacking and I'm gonna try to do something
 about it.
 
-Round 2:
+Round 2: Correcting my first rant (I guess...)
 ============================================================================
 Funny to read back all of that. Guess I was pretty tired that day ranting about
 the framework structure. After writing that "dumb" example, it now seems pretty
@@ -139,7 +139,7 @@ than just explaining their implementation (that could be done afterwards).
 
 And I might share those examples on github... Maybe.
 
-Round 3:
+Round 3: Leads on the tokio/Rust documentation confusion aspects for new readers
 ============================================================================
 I just found out why the tokio & future documentation seems so confusing to
 me: it's organised as a tree/graph linking modules and crates in which you
@@ -167,7 +167,7 @@ headed.
 
 Plus the Rust trait system doesn't help much in this regard. I don't mean
 that the trait system is bad, in fact I believe it is truly awesome. But
-when an object implements a few traits, you end up with a s***load of
+when an object implements a few traits, you end up with a lot of
 methods on the object, hidden in the trait unfoldable fields of the trait
 section.
 This leads to hardly being able to know the list of methods usable on a
@@ -197,4 +197,51 @@ easy to get lost in that.
 
 I got no solution for that. That was just my today's 2 cents on the
 documentation :p
+
+Round 4: A few ideas of improvements of the Rust documentation framework
+============================================================================
+Questioning elements ordering in a documentation page
+----------------------------------------------------------------------------
+I'm not too sure about how the methods are ordered in the documentation. I'm
+saying that while trying to find a method to fit a particular use (forward a
+mutable object to a future closure of type Fn) on the
+[future Stream doc page] (https://docs.rs/futures/0.1.25/futures/stream/trait.Stream.html).
+I'm looking at the methods of the trait and they are clearely not ordered
+alphabetically. But there are no sections (might be because of the
+documentation tooling?) to organize those methods either, and on a first
+look, I don't really see any obvious reason for the ordering of the methods.
+
+I mean either there is a good way to organize the method list, and that
+should be shown by the docs somehow (introduction text? sections?). Or the
+order should be alphabetical so that you can easily find the methods you
+might be looking for on the panel.
+
+Unless I missed something?
+
+Add a tree view of the crate content?
+----------------------------------------------------------------------------
+Oh by the way, something missing in the Rust documentation would be a full
+tree representation of its elements. Like a general overview of every entity
+the crate contains (and the link to its associated page of course).
+For example, when I go to the [tokio documentation main page] (https://docs.rs/tokio/0.1.11/tokio/),
+I get the list of the top modules of the crate. If I click on any of them,
+like codec for example, I get a list of struct, trait and a new module list
+(yeah that list contains only one element here but you get the idea).
+But I can't see all the content tree at once. Or I didn't find the right
+page?
+
+I don't really know if that would be a good idea, but you know, it's like
+when you browse your local files using the icon view or the directory tree
+view. The directory tree view allows you to see the whole structure of your
+directories, which might be helpful if there is a structure (like in most
+project folders). But the icon view hides the directory struture to give a
+better overview of the folder content. I believe both of those views are
+useful, and that's why I think a tree view of a crate could be useful.
+
+Also, a tree view would allow me to close my 10 tokio/futures documentation
+pages to have only one of each crate (2). In fact, I keep some trait/struct
+pages open because I often need to check method prototypes and I know if I
+close them I'll have to navigate the documentation tree (2-3 hops if I
+remember correctly the crate structure) which becomes quickly tiring.
+
 
