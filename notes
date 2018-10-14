@@ -96,7 +96,7 @@ Too much talk not enough code. I believe I grasped something about that
 tutorial thing that might be lacking and I'm gonna try to do something
 about it.
 
-Next:
+Round 2:
 ----------------------------------------------------------------------------
 Funny to read back all of that. Guess I was pretty tired that day ranting about
 the framework structure. After writing that "dumb" example, it now seems pretty
@@ -141,6 +141,65 @@ in the tutorials, and showed used. I think that would be a better approach
 than just explaining their implementation (that could be done afterwards).
 
 And I might share those examples on github... Maybe.
+
+Round 3:
+----------------------------------------------------------------------------
+I just found out why the tokio & future documentation seems so confusing to
+me: it's organised as a tree/graph linking modules and crates in which you
+navigate page by page.
+
+This might sound quite dumb I guess: all of Rust documentation is formatted
+exactly that way and I could use it all right. Yeah that's right, but to be
+honest I never had to deal with any complex Rust library before tokio.
+
+Before that, I always needed like just the methods of a single object or
+the prototype of a single helper. All the associated types were standard, so
+most of the time I never really had to navigate more than 1 or 2 pages of
+documentation. And the documentation page format is pretty good. So it felt
+like Rust documentation was perfect.
+
+The documentation format (tree/graph) seems logical, because it follows the
+struture of the code:
+- Modules => tree
+- extern/use => more generic graph (as opposed to a simple tree)
+But truth is it give the documentation a "Wikipedia" feel: every time you
+open a page of a structure of a complex library, you end up opening X pages.
+And when the pages are all about traits and types you don't know... well
+you're lost after 6-8 pages. And you just don't remember where you were
+headed.
+
+Plus the Rust trait system doesn't help much in this regard. I don't mean
+that the trait system is bad, in fact I believe it is truly awesome. But
+when an object implements a few traits, you end up with a s***load of
+methods on the object, hidden in the trait unfoldable fields of the trait
+section.
+This leads to hardly being able to know the list of methods usable on a
+structure because on the left navigation panel only the method specific
+to the structure are shown. And unfolding the trait in the page leads to
+a list of the traits methods with its full prototype specification and
+a short description. That's great but it would be great to have an
+equivalent unfolding trait field in the left panel that would simply list
+the list of available method names and link them to the associated
+description.
+
+In comparison, in the C, lua or nodejs libraries I used until now the
+documentation has, in general, been pretty flat. For example, there
+would be a list of types and functions given by the library presented
+as a flat list either on a single page or on a side panel. On more
+complex libraries there could be 1 or max 2 levels of "module" levels
+leading to more than one page, but the count seemed to stay reasonable.
+
+I believe one of the reasons for this is that Rust libraries (tokio
+in particular), tend to reuse a lot of trait and structs from other
+libraries. That is of course a good thing but leads to the ecosystem
+being more a lot of small modules importing each others than the
+standard huge blob I got used to in other languages. Therefore it
+feels like an understanding of what you are doing requires an
+understanding of that whole dependency graph. And I believe it's
+easy to get lost in that.
+
+I got no solution for that. That was just my today's 2 cents on the
+documentation :p
 
 Confusing errors:
 ============================================================================
