@@ -4,6 +4,7 @@ of my head during my coding session (or rather just after, in general).
 
 First impressions: (beware, quite some rant)
 ============================================================================
+<details>
 I believe the main problems with learning were:
 - Still having difficulties grasping the ecosystem structure,
 therefore never returning futures or polls at the right place.
@@ -92,9 +93,11 @@ libraries to create easy to use/maybe less powerful APIs.
 Too much talk not enough code. I believe I grasped something about that
 tutorial thing that might be lacking and I'm gonna try to do something
 about it.
+</details>
 
 Round 2: Correcting my first rant (I guess...)
 ============================================================================
+<details>
 Funny to read back all of that. Guess I was pretty tired that day ranting about
 the framework structure. After writing that "dumb" example, it now seems pretty
 simple to me.
@@ -138,9 +141,11 @@ in the tutorials, and showed used. I think that would be a better approach
 than just explaining their implementation (that could be done afterwards).
 
 And I might share those examples on github... Maybe.
+</details>
 
 Round 3: Leads on the tokio/Rust documentation confusion aspects for new readers
 ============================================================================
+<details>
 I just found out why the tokio & future documentation seems so confusing to
 me: it's organised as a tree/graph linking modules and crates in which you
 navigate page by page.
@@ -197,9 +202,12 @@ easy to get lost in that.
 
 I got no solution for that. That was just my today's 2 cents on the
 documentation :p
+</details>
 
 Round 4: A few ideas of improvements of the Rust documentation framework
 ============================================================================
+<details>
+
 Questioning elements ordering in a documentation page
 ----------------------------------------------------------------------------
 I'm not too sure about how the methods are ordered in the documentation. I'm
@@ -243,5 +251,6 @@ pages to have only one of each crate (2). In fact, I keep some trait/struct
 pages open because I often need to check method prototypes and I know if I
 close them I'll have to navigate the documentation tree (2-3 hops if I
 remember correctly the crate structure) which becomes quickly tiring.
+</details>
 
 
