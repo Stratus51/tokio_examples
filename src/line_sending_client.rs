@@ -34,6 +34,11 @@ fn main() {
                 let stream = tokio::codec::Framed::new(socket, tokio::codec::LinesCodec::new());
 
                 // Sending a hello message
+                // -------------------------
+                // This creates a future (that'll resolve when the data is sent
+                // or on sending error) that I return at the end of this closure.
+                // That way it is automatically launched by the scheduler.
+                // Else I would have had to use tokio::spawn.
                 stream.send("I am a client".to_string()).map_err(|err| {
                     // Processing errors (before and_then)
                     println!("Send error: {:?}", err);
