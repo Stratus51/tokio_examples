@@ -4,7 +4,7 @@ extern crate tokio;
 // Trait required for map_err
 use futures::Future;
 
-// Trait required for for_each on streams
+// Trait required for fold on streams
 use futures::Stream;
 
 // Trait required for stream send method
@@ -43,23 +43,53 @@ fn main() {
                 let stream = tokio::codec::Framed::new(socket, tokio::codec::LinesCodec::new());
 
                 println!("Waiting for {}s", ping_start_offset);
+
+                // Create our interval (periodic timer)
+                // ------------------------------------
+                // This interval will start at the time ping_start and then trigger
+                // every ping_period.
+                // It is also the return item of our closure which means it will
+                // be spawned by the scheduler automatically
                 tokio::timer::Interval::new(ping_start, ping_period)
+                    // Catch interval error
                     .map_err(|err| {
                         println!("Couldn't start the timer: {:?}", err);
                     })
+                    // Okay, I needed to insert the stream somehow in the interval
+                    // closure, which was complicated as I could not just move it in
+                    // because of closure type conflict (something about FnOnce and
+                    // FnMut).
+                    //
+                    // Therefore, I ended up copying a trick I found on mqtt-protocol.
+                    // I hope you all know what fold means on an iterator: iterating
+                    // on each values and modifying a result value with it.
+                    //
+                    // Here this is exactly what we do: we give the initial value to
+                    // fold (our stream), then it will be passed as a mutable to our
+                    // closure to be modified and at the end we have to return the
+                    // result. We return our stream unchanged so that it can be passed
+                    // again to us as the result on the next turn.
+                    //
+                    // We're not really folding the values into one... Or if we
+                    // consider a stream filled with the wanted packets a result then
+                    // I guess we are folding something.
+                    // (Well I'm not even using the interval value but whatever)
                     .fold(stream, |stream, _interval| {
-                        // Sending a hello message
+                        // Sending a ping message
                         stream.send("Ping".to_string())
-                        // Processing errors (before and_then)
+                        // Processing send errors
                         .map_err(|err| {
                             println!("Send error: {:?}", err);
                         // On success print
                         }).and_then(|stream| {
                             println!("Successfully pinged!");
 
-                            // Return required next future (which does nothing successfully)
+                            // Return required next future containing the fold result
                             futures::future::ok(stream)
                         })
+                    // The "final" future result has to be Result<(), ()> for
+                    // tokio::run to be execute successfully. Therefore we just drop
+                    // the folded value (our stream) to match the wanted type.
                     }).map(|_| {})
             }),
     );
