@@ -16,3 +16,12 @@ understand the structure/hierarchy of the future/tokio ecosystem. And I think th
 knowledge might help getting comfortable using the library.
 
 I'll therefore avoid using the crates preludes.
+
+Examples
+============================================
+
+dumb
+--------------------------------------------
+This example consists of a server printing client messages and a client sending a
+message then quiting.
+
