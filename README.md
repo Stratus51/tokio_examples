@@ -52,8 +52,11 @@ If you have any additional documentation you want to put here, feel free to shar
 Official documentation
 --------------------------------------------
 [Tokio tutorial] (https://tokio.rs/docs/getting-started/hello-world/)
+
 [Tokio official examples] (https://github.com/tokio-rs/tokio/tree/master/examples)
+
 [Tokio documentation] (https://docs.rs/tokio/)
+
 [Future documentation] (https://docs.rs/futures/)
 
 Blog articles
