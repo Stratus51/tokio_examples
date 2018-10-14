@@ -37,7 +37,11 @@ fn main() {
                 stream.send("I am a client".to_string()).map_err(|err| {
                     // Processing errors (before and_then)
                     println!("Send error: {:?}", err);
-                // On success, do:
+
+                // On success.
+                // --------------------------
+                // Also note that you get a (mut) reference to your stream in the
+                // closure. How handy ! :D
                 }).and_then(|mut stream| {
                     println!("Successfully sent packet!");
 
