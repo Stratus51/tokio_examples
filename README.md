@@ -29,6 +29,6 @@ Examples using the tokio::codec::LinesCodec.
 Program that basically sits there and wait for clients. Then on any connected
 client, it waits for messages that it prints in its stdout.
 
-###. line_sending_client
+### line_sending_client
 Tries to connect to a server. On success sends a message to the server and
 closes the socket.
