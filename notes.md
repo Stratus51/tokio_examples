@@ -1,12 +1,9 @@
-Impressions
-============================================================================
-
 Pretty much ranting that I can read to understand... what I don't understand?
 Nothing really interesting unless you wanna read thoughts written on the top
 of my head during my coding session (or rather just after, in general).
 
 First impressions:
-----------------------------------------------------------------------------
+============================================================================
 I believe the main problems with learning were:
 - Still having difficulties grasping the ecosystem structure,
 therefore never returning futures or polls at the right place.
@@ -97,7 +94,7 @@ tutorial thing that might be lacking and I'm gonna try to do something
 about it.
 
 Round 2:
-----------------------------------------------------------------------------
+============================================================================
 Funny to read back all of that. Guess I was pretty tired that day ranting about
 the framework structure. After writing that "dumb" example, it now seems pretty
 simple to me.
@@ -143,7 +140,7 @@ than just explaining their implementation (that could be done afterwards).
 And I might share those examples on github... Maybe.
 
 Round 3:
-----------------------------------------------------------------------------
+============================================================================
 I just found out why the tokio & future documentation seems so confusing to
 me: it's organised as a tree/graph linking modules and crates in which you
 navigate page by page.
@@ -201,33 +198,3 @@ easy to get lost in that.
 I got no solution for that. That was just my today's 2 cents on the
 documentation :p
 
-Confusing errors:
-============================================================================
-fn program(port: u16) -> impl Future<Item = (), Error = tokio::io::Error>
-----------------------------------------------------------------------------
-error[E0271]: type mismatch resolving `<impl futures::Future as futures::Future>::Error == ()`
-  --> src/main.rs:52:5
-   |
-52 |     tokio::run(program(port));
-   |     ^^^^^^^^^^ expected struct `std::io::Error`, found ()
-   |
-   = note: expected type `std::io::Error`
-              found type `()`
-   = note: required by `tokio::run`
-
-Confusing: looks like tokio::run wants std::io::Error but found (), when it is the opposite.
-
-There are more like this, the first one is the most confusing. Unfortunately, you get used to it ...
-
-stream.send("I am a client".to_string()).then(...
-----------------------------------------------------------------------------
-error[E0282]: type annotations needed
-  --> src/dumb/client.rs:29:21
-   |
-29 |                     futures::future::ok(())
-   |                     ^^^^^^^^^^^^^^^^^^^ cannot infer type for `E`
-
-error: aborting due to previous error
-
-I guessed E was the Error type of futures::future::ok, but when starting tokio programming
-that might not be obvious... Or I might lack Rust experience, that's entirely possible too :p
