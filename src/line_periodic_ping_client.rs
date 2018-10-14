@@ -61,14 +61,20 @@ fn main() {
                     // FnMut).
                     //
                     // Therefore, I ended up copying a trick I found on mqtt-protocol.
-                    // I hope you all know what fold means on an iterator: iterating
-                    // on each values and modifying a result value with it.
+                    //
+                    // I used the method fold that usually means on an iterator:
+                    // Start with a value and modify it with each item from the
+                    // iterator. Therefore on each new item, the closure will be passed
+                    // the current value and will have to return the new one.
+                    //
+                    // When the iterator is exhausted, the fold method will return the
+                    // last value.
                     //
                     // Here this is exactly what we do: we give the initial value to
                     // fold (our stream), then it will be passed as a mutable to our
                     // closure to be modified and at the end we have to return the
                     // result. We return our stream unchanged so that it can be passed
-                    // again to us as the result on the next turn.
+                    // again to us as the current value on the next turn.
                     //
                     // We're not really folding the values into one... Or if we
                     // consider a stream filled with the wanted packets a result then
@@ -90,7 +96,10 @@ fn main() {
                     // The "final" future result has to be Result<(), ()> for
                     // tokio::run to be execute successfully. Therefore we just drop
                     // the folded value (our stream) to match the wanted type.
-                    }).map(|_| {})
+                    //
+                    // We could have closed the stream. But you know, it'll be closed
+                    // anyway when droping... I assume ... :p
+                    }).map(|_stream| {})
             }),
     );
 }
