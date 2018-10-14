@@ -30,8 +30,14 @@ Program that basically sits there and wait for clients. Then on any connected
 client, it waits for messages that it prints in its stdout.
 
 ### line_sending_client
-Tries to connect to a server. On success sends a message to the server and
-closes the socket.
+Tries to connect to a server. On success:
+- Sends a message to the server and
+- Closes the socket.
+
+### line_periodic_ping_client
+Tries to connect to a server. On success:
+- Waits 5 seconds
+- Sends a message to the server every seconds.
 
 Documentation
 ============================================

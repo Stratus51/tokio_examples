@@ -20,3 +20,7 @@ path = "src/line_listening_server.rs"
 [[bin]]
 name = "line_sending_client"
 path = "src/line_sending_client.rs"
+
+[[bin]]
+name = "line_periodic_ping_client"
+path = "src/line_periodic_ping_client.rs"
