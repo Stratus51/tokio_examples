@@ -2,9 +2,11 @@ Pretty much ranting that I can read to understand... what I don't understand?
 Nothing really interesting unless you wanna read thoughts written on the top
 of my head during my coding session (or rather just after, in general).
 
+<details><summary>
+
 First impressions: (beware, quite some rant)
 ============================================================================
-<details>
+</summary>
 I believe the main problems with learning were:
 - Still having difficulties grasping the ecosystem structure,
 therefore never returning futures or polls at the right place.
@@ -94,10 +96,11 @@ Too much talk not enough code. I believe I grasped something about that
 tutorial thing that might be lacking and I'm gonna try to do something
 about it.
 </details>
+<details><summary>
 
 Round 2: Correcting my first rant (I guess...)
 ============================================================================
-<details>
+</summary>
 Funny to read back all of that. Guess I was pretty tired that day ranting about
 the framework structure. After writing that "dumb" example, it now seems pretty
 simple to me.
@@ -142,10 +145,11 @@ than just explaining their implementation (that could be done afterwards).
 
 And I might share those examples on github... Maybe.
 </details>
+<details><summary>
 
 Round 3: Leads on the tokio/Rust documentation confusion aspects for new readers
 ============================================================================
-<details>
+</summary>
 I just found out why the tokio & future documentation seems so confusing to
 me: it's organised as a tree/graph linking modules and crates in which you
 navigate page by page.
@@ -203,10 +207,11 @@ easy to get lost in that.
 I got no solution for that. That was just my today's 2 cents on the
 documentation :p
 </details>
+<details><summary>
 
 Round 4: A few ideas of improvements of the Rust documentation framework
 ============================================================================
-<details>
+</summary>
 
 Questioning elements ordering in a documentation page
 ----------------------------------------------------------------------------
