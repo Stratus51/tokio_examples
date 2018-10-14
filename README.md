@@ -19,9 +19,16 @@ I'll therefore avoid using the crates preludes.
 
 Examples
 ============================================
+Every example can be launched via `cargo run --bin <example_name>`.
 
-dumb
+Based on the line codec
 --------------------------------------------
-This example consists of a server printing client messages and a client sending a
-message then quiting.
+Examples using the tokio::codec::LinesCodec.
 
+### line_listening_server
+Program that basically sits there and wait for clients. Then on any connected
+client, it waits for messages that it prints in its stdout.
+
+###. line_sending_client
+Tries to connect to a server. On success sends a message to the server and
+closes the socket.

@@ -14,9 +14,9 @@ name = "main"
 path = "src/main.rs"
 
 [[bin]]
-name = "dumb_server"
-path = "src/dumb/server.rs"
+name = "line_listening_server"
+path = "src/line_listening_server.rs"
 
 [[bin]]
-name = "dumb_client"
-path = "src/dumb/client.rs"
+name = "line_sending_client"
+path = "src/line_sending_client.rs"
