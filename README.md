@@ -61,9 +61,9 @@ Official documentation
 
 Blog articles
 --------------------------------------------
-[dev.to article](https://dev.to/mindflavor/rust-futures-an-uneducated-short-and-hopefully-not-boring-tutorial---part-1-3k3) about future usage. Was a good lesson about what the futures are especially as an standalone component instead of a "tokio callback".
+["Rust futures: an uneducated, short and hopefully not boring tutorial"](https://dev.to/mindflavor/rust-futures-an-uneducated-short-and-hopefully-not-boring-tutorial---part-1-3k3) from dev.to about future usage. Was a good lesson about what the futures are especially as an standalone component instead of a "tokio callback".
 
-[Caffeinated Bitstream article](https://cafbit.com/post/tokio_internals/) explaining how tokio works on a lower level and what it does with the futures you are throwing at it. Especially interesting if you've already implemented your own scheduler on some project.
+["Tokio internals: Understanding Rust's asynchronous I/O framework from the bottom up"](https://cafbit.com/post/tokio_internals/) from Caffeinated Bitstream explaining how tokio works on a lower level and what it does with the futures you are throwing at it. Especially interesting if you've already had to implement your own scheduler on some project.
 
 Other projects
 --------------------------------------------
