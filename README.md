@@ -51,22 +51,22 @@ If you have any additional documentation you want to put here, feel free to shar
 
 Official documentation
 --------------------------------------------
-[Tokio tutorial] (https://tokio.rs/docs/getting-started/hello-world/)
+[Tokio tutorial](https://tokio.rs/docs/getting-started/hello-world/)
 
-[Tokio official examples] (https://github.com/tokio-rs/tokio/tree/master/examples)
+[Tokio official examples](https://github.com/tokio-rs/tokio/tree/master/examples)
 
-[Tokio documentation] (https://docs.rs/tokio/)
+[Tokio documentation](https://docs.rs/tokio/)
 
-[Future documentation] (https://docs.rs/futures/)
+[Future documentation](https://docs.rs/futures/)
 
 Blog articles
 --------------------------------------------
-[dev.to article] (https://dev.to/mindflavor/rust-futures-an-uneducated-short-and-hopefully-not-boring-tutorial---part-1-3k3) about future usage. Was a good lesson about what the futures are especially as an standalone component instead of a "tokio callback".
+[dev.to article](https://dev.to/mindflavor/rust-futures-an-uneducated-short-and-hopefully-not-boring-tutorial---part-1-3k3) about future usage. Was a good lesson about what the futures are especially as an standalone component instead of a "tokio callback".
 
-[Caffeinated Bitstream article] (https://cafbit.com/post/tokio_internals/) explaining how tokio works on a lower level and what it does with the futures you are throwing at it. Especially interesting if you've already implemented your own scheduler on some project.
+[Caffeinated Bitstream article](https://cafbit.com/post/tokio_internals/) explaining how tokio works on a lower level and what it does with the futures you are throwing at it. Especially interesting if you've already implemented your own scheduler on some project.
 
 Other projects
 --------------------------------------------
-[mqtt-protocol lib example] (https://github.com/zonyitoo/mqtt-rs/blob/master/examples/sub-client-async.rs)
+[mqtt-protocol lib example](https://github.com/zonyitoo/mqtt-rs/blob/master/examples/sub-client-async.rs)
 
-[jgallagher chat client/server example] (https://github.com/jgallagher/tokio-chat-example/blob/master/tokio-chat-client/src/main.rs)
+[jgallagher chat client/server example](https://github.com/jgallagher/tokio-chat-example/blob/master/tokio-chat-client/src/main.rs)
