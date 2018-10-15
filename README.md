@@ -2,6 +2,7 @@ tokio_examples
 ============================================
 
 Just trying to make a few tokio usage examples to learn how to use the library.
+
 Feel free to correct me if I'm wrong via pull requests I guess? (<= not used to open source collaboration)
 
 Conventions
@@ -26,13 +27,14 @@ Based on the line codec
 Examples using the tokio::codec::LinesCodec.
 
 ### line_listening_server
-Program that basically sits there and wait for clients. Then on any connected
-client, it waits for messages that it prints in its stdout.
+Program that:
+- Waits for clients. 
+- Prints messages from each client into the console.
 
 ### line_sending_client
 Tries to connect to a server. On success:
-- Sends a message to the server and
-- Closes the socket.
+- Sends a message to the server
+- Closes the socket
 
 ### line_periodic_ping_client
 Tries to connect to a server. On success:
@@ -43,9 +45,10 @@ Documentation
 ============================================
 This is of course not an exhaustive list of the tokio documentation out there. It's
 just a list of the documentation I can remember I read about tokio.
-I probably forgot a lot, but I tend to read them from reddit on my way to work so I
-never remember what were the sources I read from when I'm finally back at home and
-all the chores are done.
+
+I probably forgot a lot, but I tend to read them from reddit on my way to work so I'm
+having a hard time remembering what were the sources I read from when I'm finally back
+home in front of my computer.
 
 If you have any additional documentation you want to put here, feel free to share a pull request.
 
@@ -61,7 +64,7 @@ Official documentation
 
 Blog articles
 --------------------------------------------
-["Rust futures: an uneducated, short and hopefully not boring tutorial"](https://dev.to/mindflavor/rust-futures-an-uneducated-short-and-hopefully-not-boring-tutorial---part-1-3k3) from dev.to about future usage. Was a good lesson about what the futures are especially as an standalone component instead of a "tokio callback".
+["Rust futures: an uneducated, short and hopefully not boring tutorial"](https://dev.to/mindflavor/rust-futures-an-uneducated-short-and-hopefully-not-boring-tutorial---part-1-3k3) from dev.to about future usage. Was a good lesson about what the futures are, especially as a standalone component instead of a "tokio callback".
 
 ["Tokio internals: Understanding Rust's asynchronous I/O framework from the bottom up"](https://cafbit.com/post/tokio_internals/) from Caffeinated Bitstream explaining how tokio works on a lower level and what it does with the futures you are throwing at it. Especially interesting if you've already had to implement your own scheduler on some project.
 
