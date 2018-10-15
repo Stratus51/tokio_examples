@@ -209,7 +209,7 @@ documentation :p
 </details>
 <details><summary>
 
-Round 4: A few ideas of improvements of the Rust documentation framework
+Round 4: Some ideas to improve the Rust documentation
 ============================================================================
 </summary>
 
