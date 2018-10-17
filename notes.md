@@ -300,4 +300,6 @@ more like spawn based (specified in background by the future "new"
 method). Because that knowledge would allow me to make sure I understand
 how listen to the "pipes" of my I/O managers.
 
+And I definitely need to re read the official tutorial and examples.
+
 </details>
