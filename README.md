@@ -3,10 +3,6 @@ tokio_examples
 
 Just trying to make a few tokio usage examples to learn how to use the library.
 
-Feel free to correct me if I'm wrong via pull requests I guess? (<= not used to open source collaboration)
-
-PS: Please, don't read the main.rs :p
-
 Conventions
 ============================================
 
@@ -47,12 +43,6 @@ Documentation
 ============================================
 This is of course not an exhaustive list of the tokio documentation out there. It's
 just a list of the documentation I can remember I read about tokio.
-
-I probably forgot a lot, but I tend to read them from reddit on my way to work so I'm
-having a hard time remembering what were the sources I read from when I'm finally back
-home in front of my computer.
-
-If you have any additional documentation you want to put here, feel free to share a pull request.
 
 Official documentation
 --------------------------------------------
