@@ -1,20 +1,6 @@
 tokio_examples
 ============================================
-
 Just trying to make a few tokio usage examples to learn how to use the library.
-
-Conventions
-============================================
-
-namespaces
---------------------------------------------
-In all of my examples, I'll try to avoid to "use" submodules. In fact, as these
-examples' goal is to help the reader (and myself) understand how to use tokio and I
-believe having the full name of each element (struct of methods) might help
-understand the structure/hierarchy of the future/tokio ecosystem. And I think that
-knowledge might help getting comfortable using the library.
-
-I'll therefore avoid using the crates preludes.
 
 Examples
 ============================================
@@ -41,8 +27,6 @@ Tries to connect to a server. On success:
 
 Documentation
 ============================================
-This is of course not an exhaustive list of the tokio documentation out there. It's
-just a list of the documentation I can remember I read about tokio.
 
 Official documentation
 --------------------------------------------
@@ -56,9 +40,9 @@ Official documentation
 
 Blog articles
 --------------------------------------------
-["Rust futures: an uneducated, short and hopefully not boring tutorial"](https://dev.to/mindflavor/rust-futures-an-uneducated-short-and-hopefully-not-boring-tutorial---part-1-3k3) from dev.to about future usage. Was a good lesson about what the futures are, especially as a standalone component instead of a "tokio callback".
+["Rust futures: an uneducated, short and hopefully not boring tutorial"](https://dev.to/mindflavor/rust-futures-an-uneducated-short-and-hopefully-not-boring-tutorial---part-1-3k3)
 
-["Tokio internals: Understanding Rust's asynchronous I/O framework from the bottom up"](https://cafbit.com/post/tokio_internals/) from Caffeinated Bitstream explaining how tokio works on a lower level and what it does with the futures you are throwing at it. Especially interesting if you've already had to implement your own scheduler on some project.
+["Tokio internals: Understanding Rust's asynchronous I/O framework from the bottom up"](https://cafbit.com/post/tokio_internals/)
 
 Other projects
 --------------------------------------------
