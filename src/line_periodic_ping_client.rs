@@ -55,6 +55,12 @@ fn main() {
                     .map_err(|err| {
                         println!("Couldn't start the timer: {:?}", err);
                     })
+                    // TODO this is a terrible hack totally unusable in practice.
+                    // ... Working on the simplest fix I can find. Right now the
+                    // only option I see is the one implemented in the official
+                    // tokio chat example. But it's a bit cumbersome so I'm digging
+                    // just in case there a simple correct way for this example.
+                    //
                     // Okay, I needed to insert the stream somehow in the interval
                     // closure, which was complicated as I could not just move it in
                     // because of closure type conflict (something about FnOnce and
