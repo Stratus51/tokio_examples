@@ -305,6 +305,40 @@ And I definitely need to re read the official tutorial and examples.
 </details>
 
 <details><summary>
+Round 6: Damn I should have re-read the docs
+============================================================================
+</summary>
+
+Okay entirely my fault here. I re-read the docs that I didn't want to read
+again (because I hate re-reading stuff. Thankfully it was a bit different).
+And it reminded me that I'm coding all of these examples in a very wrong
+way. And that's not because the guide improved (even though it did improve
+since the last time I read it). I clearly remember the part that states that
+futures aren't callbacks and shouldn't be coded that way from the old
+tutorial.
+
+I guess I'm just too lazy and stubborn (mostly lazy). So let's correct all of
+my examples!
+
+First, you're supposed to code your own futures instead of trying to avoid
+via using only operators like I was doing. That was terribly against the
+system. The operators are there to be used, yes, but not to replace the
+future code I'm supposed to write (like when I used a fold operator to
+avoid having to implement a future sensible both to a timer and that owned
+a socket).
+
+Then futures can behave like callbacks but also like thread subscribed to
+events by keeping an internal state. That allows complex hand made
+sub-future composition.
+
+Also I still have a fuzzy concept of how the task/futures/notifications
+objects articulate. But I guess we're here to discover just that.
+
+Oh I guess we'll go with the architecture described above (I/O <=> ...).
+
+</details>
+
+<details><summary>
 Round N:
 ============================================================================
 </summary>
