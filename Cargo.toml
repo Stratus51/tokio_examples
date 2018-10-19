@@ -10,10 +10,6 @@ bytes = "0"
 bincode = "1"
 
 [[bin]]
-name = "main"
-path = "src/main.rs"
-
-[[bin]]
 name = "line_listening_server"
 path = "src/line_listening_server.rs"
 
