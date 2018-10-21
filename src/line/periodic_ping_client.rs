@@ -5,10 +5,10 @@ extern crate tokio;
 // Trait required for map_err
 use futures::Future;
 
-// Trait required for fold on streams
+// Trait required for poll on streams
 use futures::Stream;
 
-// Trait required for stream send method
+// Trait required for start_send and poll_complete method on our line stream
 use futures::sink::Sink;
 
 // Standard time structures
