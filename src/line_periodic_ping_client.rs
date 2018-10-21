@@ -56,7 +56,9 @@ impl futures::Future for Pinger {
             println!("Sending ping!");
             self.stream.start_send("Ping".to_string())?;
         }
-        self.stream.poll_complete()?;
+        if let futures::Async::Ready(_) = self.stream.poll_complete()? {
+            println!("Socket writes fully flushed");
+        }
 
         Ok(futures::Async::NotReady)
     }
