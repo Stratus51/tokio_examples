@@ -11,12 +11,12 @@ bincode = "1"
 
 [[bin]]
 name = "line_listening_server"
-path = "src/line_listening_server.rs"
+path = "src/line/listening_server.rs"
 
 [[bin]]
 name = "line_sending_client"
-path = "src/line_sending_client.rs"
+path = "src/line/sending_client.rs"
 
 [[bin]]
 name = "line_periodic_ping_client"
-path = "src/line_periodic_ping_client.rs"
+path = "src/line/periodic_ping_client.rs"
