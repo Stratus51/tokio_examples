@@ -55,7 +55,7 @@ Blog articles
 
 ["Tokio internals: Understanding Rust's asynchronous I/O framework from the bottom up"](https://cafbit.com/post/tokio_internals/)
 
-Other projects
+Other projects showing tokio examples
 --------------------------------------------
 [mqtt-protocol lib example](https://github.com/zonyitoo/mqtt-rs/blob/master/examples/sub-client-async.rs)
 
