@@ -3,10 +3,10 @@ extern crate tokio;
 
 // We need this trait declaration to have the for_each method auto implementation
 // on our streams
-use futures::{Stream};
+use futures::Stream;
 
 // We need this trait declaration to have the map_err on our futures
-use futures::{Future};
+use futures::Future;
 
 // Usage:
 // You can telnet that server (telnet 127.0.0.1 12345) and send it messages
@@ -27,13 +27,14 @@ fn main() {
                 // New client processing
                 println!("New client from {:?}", socket.peer_addr().unwrap());
 
-                // Creating a Stream from the socket because for some reason the
-                // the socket itself is not a byte stream ...
+                // Creating a Stream from the socket (because a TcpStream ain't a
+                // stream)
                 //
                 // I could have used the BytesCodec, but hey, if we're going to be
                 // using a codec anyway, let's get comfy and use one that returns
                 // strings :D
                 let stream = tokio::codec::Framed::new(socket, tokio::codec::LinesCodec::new());
+
                 // Spawning a future (~callback in our case) to process each
                 // stream new items
                 tokio::spawn(
