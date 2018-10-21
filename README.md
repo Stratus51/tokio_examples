@@ -10,20 +10,31 @@ Based on the line codec
 --------------------------------------------
 Examples using the tokio::codec::LinesCodec.
 
-### line_listening_server
-Program that:
-- Waits for clients. 
+### Basic
+#### line_listening_server
+Server that:
+- Waits for clients.
 - Prints messages from each client into the console.
 
-### line_sending_client
+#### line_sending_client
 Tries to connect to a server. On success:
 - Sends a message to the server
 - Closes the socket
 
-### line_periodic_ping_client
+### Implementing basic futures
+#### line_periodic_ping_client
 Tries to connect to a server. On success:
 - Waits 5 seconds
 - Sends a message to the server every seconds.
+
+Using a future to owning both a socket and an interval.
+
+#### line_with_greetings_server
+Server that for all clients:
+- Sends a greeting message.
+- Prints all messages coming from the client.
+
+Using a future to greet the client and chaining a second one that prints the client messages.
 
 Documentation
 ============================================
