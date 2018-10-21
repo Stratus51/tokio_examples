@@ -1,17 +1,19 @@
 extern crate futures;
 extern crate tokio;
 
-// We need this trait declaration to have the for_each method auto implementation
-// on our streams
+// "Imports" -----------------------------------------------------------------------
+// Trait required for poll on streams
 use futures::Stream;
 
 // We need this trait declaration to have the map_err on our futures
 use futures::Future;
 
-// Trait required for stream send method
+// Trait required for start_send and poll_complete method on our line stream
 use futures::sink::Sink;
 
+// ClientGreetings (future sending a greeting) -------------------------------------
 struct ClientGreetings {
+    // This stream is an option so that we can move it when we are ready
     stream: Option<tokio::codec::Framed<tokio::net::TcpStream, tokio::codec::LinesCodec>>,
     is_sending: bool,
 }
@@ -30,32 +32,42 @@ impl futures::Future for ClientGreetings {
     type Error = tokio::io::Error;
 
     fn poll(&mut self) -> futures::Poll<Self::Item, Self::Error> {
+        // Decapsulate stream
         match self.stream {
             Some(ref mut stream) => {
+                // If we haven't started sending the greeting
                 if !self.is_sending {
+                    self.is_sending = true;
                     println!("Sending greetings...");
                     stream.start_send("Hello".to_string())?;
                 }
 
+                // If the stream write could not be flushed yet
                 if let futures::Async::NotReady = stream.poll_complete()? {
-                    self.is_sending = true;
-
                     // TODO Check if the socket was closed before the greeting was
                     // sent
+
+                    // Return that we are still waiting for the flush
                     return Ok(futures::Async::NotReady);
                 }
-            }
+            },
+
+            // Not supposed to happen
             None => panic!("No ClientGreetings doesn't have a stream anymore!"),
         }
 
+        // We're done, send the ready signal and pass the stream
         println!("Greetings sent.");
         match self.stream.take() {
             Some(stream) => Ok(futures::Async::Ready(stream)),
+
+            // Not supposed to happen
             None => panic!("No ClientGreetings doesn't have a stream anymore!"),
         }
     }
 }
 
+// ClientMaintenance (printing client messages) ------------------------------------
 struct ClientMaintenance {
     stream: tokio::codec::Framed<tokio::net::TcpStream, tokio::codec::LinesCodec>,
 }
@@ -65,6 +77,7 @@ impl futures::Future for ClientMaintenance {
     type Error = tokio::io::Error;
 
     fn poll(&mut self) -> futures::Poll<Self::Item, Self::Error> {
+        // While there are buffered lines
         while let futures::Async::Ready(data) = self.stream.poll()? {
             // Stream convention: data will be Some on data and None on stream
             // ending
