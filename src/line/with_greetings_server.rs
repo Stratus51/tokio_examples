@@ -114,10 +114,17 @@ fn main() {
             .incoming() // This is a Stream
             .for_each(|socket| {
                 println!("New client connected!");
-                ClientGreetings::new(tokio::codec::Framed::new(
+
+                // Build line stream from socket
+                let stream = tokio::codec::Framed::new(
                     socket,
                     tokio::codec::LinesCodec::new()
-                )).and_then(|stream| {
+                );
+
+                // Give the stream to a future that will greet it
+                ClientGreetings::new(stream).and_then(|stream| {
+                    // And then forward the stream to a future that will maintain the
+                    // connection
                     ClientMaintenance {
                         stream: stream,
                     }
