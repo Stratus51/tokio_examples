@@ -36,6 +36,14 @@ Server that for all clients:
 
 Using a future to greet the client and chaining a second one that prints the client messages.
 
+#### line_requiring_keepalive_server
+Server that for all clients:
+- Sends a greeting message.
+- Prints all messages coming from the client.
+- If a client stays silent for more than 20s, close its connection.
+
+Using a future to greet the client and chaining a second one that prints the client messages.
+
 Documentation
 ============================================
 

@@ -24,3 +24,7 @@ path = "src/line/periodic_ping_client.rs"
 [[bin]]
 name = "line_with_greetings_server"
 path = "src/line/with_greetings_server.rs"
+
+[[bin]]
+name = "line_requiring_keepalive_server"
+path = "src/line/requiring_keepalive_server.rs"
