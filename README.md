@@ -44,6 +44,24 @@ Server that for all clients:
 
 Using a future to greet the client and chaining a second one that prints the client messages.
 
+Based on the custom codec
+--------------------------------------------
+Examples using a custom codec based on [bincode](https://github.com/TyOverby/bincode).
+
+### Basic
+#### custom_raw_listening_server
+Server that:
+- Waits for clients.
+- Prints packets from each client into the console.
+
+#### custom_ping_client
+Tries to connect to a server. On success:
+- Waits 5 seconds
+- Sends a connect packet
+- Then sends a message packet to the server every seconds.
+
+Using a future to owning both a socket and an interval.
+
 Documentation
 ============================================
 

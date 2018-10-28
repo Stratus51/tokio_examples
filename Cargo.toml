@@ -8,6 +8,8 @@ tokio = "0"
 futures = "0"
 bytes = "0"
 bincode = "1"
+serde = "1"
+serde_derive = "1"
 
 [[bin]]
 name = "line_listening_server"
@@ -28,3 +30,15 @@ path = "src/line/with_greetings_server.rs"
 [[bin]]
 name = "line_requiring_keepalive_server"
 path = "src/line/requiring_keepalive_server.rs"
+
+[[bin]]
+name = "custom_listening_server"
+path = "src/custom/listening_server.rs"
+
+[[bin]]
+name = "custom_ping_client"
+path = "src/custom/ping_client.rs"
+
+[[bin]]
+name = "custom_base_chat_server"
+path = "src/custom/base_chat_server.rs"
