@@ -50,7 +50,7 @@ impl futures::Future for ClientGreetings {
                     // Return that we are still waiting for the flush
                     return Ok(futures::Async::NotReady);
                 }
-            },
+            }
 
             // Not supposed to happen
             None => panic!("No ClientGreetings doesn't have a stream anymore!"),

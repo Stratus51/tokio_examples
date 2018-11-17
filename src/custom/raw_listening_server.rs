@@ -1,7 +1,7 @@
+extern crate bincode;
+extern crate bytes;
 extern crate futures;
 extern crate tokio;
-extern crate bytes;
-extern crate bincode;
 #[macro_use]
 extern crate serde_derive;
 

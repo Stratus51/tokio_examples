@@ -1,22 +1,20 @@
-use tokio;
-use bytes::BytesMut;
-use bytes::buf::BufMut;
 use bincode;
+use bytes::buf::BufMut;
+use bytes::BytesMut;
+use tokio;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub enum Packet {
-    Connect{ name: String },
+    Connect { name: String },
     Ping,
-    Message{ msg: String },
+    Message { msg: String },
 }
 
-pub struct Codec {
-}
+pub struct Codec {}
 
 impl Codec {
     pub fn new() -> Self {
-        Codec {
-        }
+        Codec {}
     }
 }
 
@@ -38,12 +36,12 @@ impl tokio::codec::Decoder for Codec {
 
                 buf.split_to(parsed_size as usize);
                 Ok(Some(item))
-            },
+            }
             Err(e) => match *e {
                 bincode::ErrorKind::Io(_err) => Ok(None),
                 // TODO: Check for other interesting errors
                 _ => Err(parsing_error(&e)),
-            }
+            },
         }
     }
 }
@@ -58,7 +56,7 @@ impl tokio::codec::Encoder for Codec {
                 buf.reserve(vec.len());
                 buf.put(vec);
                 Ok(())
-            },
+            }
             Err(e) => Err(parsing_error(&e)),
         }
     }

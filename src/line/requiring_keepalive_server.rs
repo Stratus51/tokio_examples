@@ -73,7 +73,7 @@ impl futures::Future for ClientGreetings {
                     // Return that we are still waiting for the flush
                     return Ok(futures::Async::NotReady);
                 }
-            },
+            }
 
             // Not supposed to happen
             None => panic!("No ClientGreetings doesn't have a stream anymore!"),
@@ -98,11 +98,16 @@ struct ClientMaintenance {
 }
 
 impl ClientMaintenance {
-    fn new(stream: tokio::codec::Framed<tokio::net::TcpStream, tokio::codec::LinesCodec>, keepalive: u64) -> Self {
+    fn new(
+        stream: tokio::codec::Framed<tokio::net::TcpStream, tokio::codec::LinesCodec>,
+        keepalive: u64,
+    ) -> Self {
         Self {
             stream: stream,
             keepalive: keepalive,
-            keepalive_delay: tokio::timer::Delay::new(Instant::now() + Duration::from_secs(keepalive)),
+            keepalive_delay: tokio::timer::Delay::new(
+                Instant::now() + Duration::from_secs(keepalive),
+            ),
         }
     }
 }
@@ -127,7 +132,8 @@ impl futures::Future for ClientMaintenance {
             }
 
             // Refresh keepalive deadline on message reception
-            self.keepalive_delay.reset(Instant::now() + Duration::from_secs(self.keepalive));
+            self.keepalive_delay
+                .reset(Instant::now() + Duration::from_secs(self.keepalive));
         }
 
         // Keepalive check
