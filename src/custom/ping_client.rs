@@ -76,14 +76,12 @@ impl futures::Future for Pinger {
             // Adding a ping packet in the pending writes of our stream (not sent)
             if self.first {
                 self.first = false;
-                self.stream.start_send(codec::Packet::Connect(codec::ConnectPacket {
+                self.stream.start_send(codec::Packet::Connect {
                     name: self.name.clone(),
-                }))?;
+                })?;
             }
             else {
-                self.stream.start_send(codec::Packet::Message(codec::MessagePacket {
-                    msg: "Ping".to_string(),
-                }))?;
+                self.stream.start_send(codec::Packet::Ping)?;
             }
 
             // Resubscribe to the interval notifications by triggering a "NotReady"

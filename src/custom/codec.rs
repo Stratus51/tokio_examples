@@ -4,19 +4,10 @@ use bytes::buf::BufMut;
 use bincode;
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct ConnectPacket {
-    pub name: String,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-pub struct MessagePacket {
-    pub msg: String,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
 pub enum Packet {
-    Connect(ConnectPacket),
-    Message(MessagePacket),
+    Connect{ name: String },
+    Ping,
+    Message{ msg: String },
 }
 
 pub struct Codec {
