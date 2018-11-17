@@ -6,6 +6,7 @@ use bincode;
 #[derive(Debug, Serialize, Deserialize)]
 pub enum Packet {
     Connect{ name: String },
+    Ping,
     Message{ msg: String },
 }
 

@@ -81,9 +81,7 @@ impl futures::Future for Pinger {
                 })?;
             }
             else {
-                self.stream.start_send(codec::Packet::Message{
-                    msg: "Ping".to_string(),
-                })?;
+                self.stream.start_send(codec::Packet::Ping)?;
             }
 
             // Resubscribe to the interval notifications by triggering a "NotReady"
