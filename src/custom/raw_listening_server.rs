@@ -30,8 +30,11 @@ fn main() {
         listener
             .incoming() // This is a Stream
             .for_each(|socket| {
+                // Save the name of the peer (address)
+                let name = socket.peer_addr().unwrap();
+
                 // New client processing
-                println!("New client from {:?}", socket.peer_addr().unwrap());
+                println!("New client from {} opened a socket.", name);
 
                 // Creating a Stream from the socket (because a TcpStream ain't a
                 // stream)
@@ -45,9 +48,9 @@ fn main() {
                 // stream new items
                 tokio::spawn(
                     stream
-                        .for_each(|msg| {
+                        .for_each(move |msg| {
                             // Just print the message ...
-                            println!("Client said: '{:?}'", msg);
+                            println!("{} sent '{:?}'", name, msg);
 
                             // Return a future for some reason?
                             // Apparently there wont be any other item fed to our
@@ -59,8 +62,13 @@ fn main() {
                         // the associated error is quite confusing because it looks
                         // like the two types are swapped. See notes confusing
                         // errors)
-                        }).map_err(|err| {
-                            println!("Socket error: {:?}", err);
+                        }).map_err(move |err| {
+                            println!("{} had a socket error: {:?}", name, err);
+                        // Signal socket departure
+                        }).then(move |_| {
+                            println!("{} socket is disconnected", name);
+                            // We have to return a future
+                            futures::future::ok(())
                         }),
                 );
 
