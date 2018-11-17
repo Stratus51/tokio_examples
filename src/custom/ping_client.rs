@@ -59,7 +59,7 @@ impl futures::Future for Pinger {
             // Stream convention: data will be Some on data and None on stream
             // ending
             match data {
-                Some(line) => println!("Server said: {:?}", line),
+                Some(line) => println!("<= {:?}", line),
                 None => {
                     println!("Socket closed. Exiting.");
 
@@ -71,18 +71,20 @@ impl futures::Future for Pinger {
 
         // Check the interval
         if let futures::Async::Ready(Some(_instant)) = self.interval.poll()? {
-            println!("Sending ping!");
+            let packet = if self.first {
+                // The first packet we send is a Connect packet
+                self.first = false;
+                codec::Packet::Connect {
+                    name: self.name.clone(),
+                }
+            } else {
+                // The following packets are Ping packets
+                codec::Packet::Ping
+            };
 
             // Adding a ping packet in the pending writes of our stream (not sent)
-            if self.first {
-                self.first = false;
-                self.stream.start_send(codec::Packet::Connect {
-                    name: self.name.clone(),
-                })?;
-            }
-            else {
-                self.stream.start_send(codec::Packet::Ping)?;
-            }
+            println!("=> {:?}", packet);
+            self.stream.start_send(packet)?;
 
             // Resubscribe to the interval notifications by triggering a "NotReady"
             // return value.
@@ -100,7 +102,7 @@ impl futures::Future for Pinger {
         }
         // Try to flush the pending writes on our stream
         if let futures::Async::Ready(_) = self.stream.poll_complete()? {
-            println!("Stream writes fully flushed");
+            println!("| Stream writes fully flushed");
         }
 
         // Return that we are not ready to die yet
