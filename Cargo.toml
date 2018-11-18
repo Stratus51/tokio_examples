@@ -40,5 +40,5 @@ name = "custom_ping_client"
 path = "src/custom/ping_client.rs"
 
 [[bin]]
-name = "custom_base_chat_server"
-path = "src/custom/base_chat_server.rs"
+name = "custom_chat_server"
+path = "src/custom/chat_server.rs"

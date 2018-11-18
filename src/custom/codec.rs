@@ -6,6 +6,7 @@ use tokio;
 #[derive(Debug, Serialize, Deserialize)]
 pub enum Packet {
     Connect { name: String },
+    ConnectAck { accepted: bool },
     Ping,
     Message { msg: String },
 }
