@@ -25,6 +25,7 @@ fn main() {
     // Configuration
     let port = 12345;
     let addr = format!("127.0.0.1:{}", port).parse().unwrap();
+    let connect_timeout = 5;
     let keepalive = 10;
 
     // Creating a TCP socket listener
@@ -46,7 +47,7 @@ fn main() {
                 );
 
                 // Spawn new task to take care of the socket
-                let client_manager = client_manager::new(stream)
+                let client_manager = client_manager::new(stream, connect_timeout, keepalive)
                     .map_err(|err| {
                         println!("Client error: {:?}", err);
                     });

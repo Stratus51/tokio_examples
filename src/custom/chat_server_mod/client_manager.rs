@@ -10,6 +10,9 @@ use futures::Future;
 // Trait required for start_send and poll_complete method on our line stream
 use futures::sink::Sink;
 
+// Standard time structures
+use std::time::{Duration, Instant};
+
 // Our custom codec
 use codec;
 
@@ -26,6 +29,8 @@ pub enum ClientError {
     Timer(tokio::timer::Error),
     Unauthorized,
     BadConnectPacket(codec::Packet),
+    ConnectTimeout,
+    Keepalive,
     DisconnectBeforeConnectPacket,
 }
 
@@ -49,8 +54,8 @@ impl std::convert::From<tokio::io::Error> for NamedClientError {
 }
 
 // ClientManager -------------------------------------------------------------------
-pub fn new(stream: tokio::codec::Framed<tokio::net::TcpStream, codec::Codec>) -> impl Future<Item = (), Error = NamedClientError> {
-    ClientGreeter::new(stream)
+pub fn new(stream: tokio::codec::Framed<tokio::net::TcpStream, codec::Codec>, connect_expire: u64, keepalive: u64) -> impl Future<Item = (), Error = NamedClientError> {
+    ClientGreeter::new(stream, connect_expire, keepalive)
         .and_then(|maintainer| maintainer)
 }
 
@@ -58,12 +63,20 @@ pub fn new(stream: tokio::codec::Framed<tokio::net::TcpStream, codec::Codec>) ->
 struct ClientGreeter {
     // This stream is an option so that we can move it when we are ready
     stream: Option<tokio::codec::Framed<tokio::net::TcpStream, codec::Codec>>,
+    expire_delay: tokio::timer::Delay,
+
+    // For client maintainer
+    keepalive: u64,
 }
 
 impl ClientGreeter {
-    fn new(stream: tokio::codec::Framed<tokio::net::TcpStream, codec::Codec>) -> Self {
+    fn new(stream: tokio::codec::Framed<tokio::net::TcpStream, codec::Codec>, expire: u64, keepalive: u64) -> Self {
         Self {
             stream: Some(stream),
+            expire_delay: tokio::timer::Delay::new(
+                Instant::now() + Duration::from_secs(expire),
+            ),
+            keepalive,
         }
     }
 }
@@ -72,7 +85,6 @@ impl futures::Future for ClientGreeter {
     type Item = ClientMaintainer;
     type Error = NamedClientError;
 
-    // TODO Add connect timeout management
     fn poll(&mut self) -> futures::Poll<Self::Item, Self::Error> {
         // Checking for new packet
         let packet = match self.stream.as_mut().unwrap().poll()? {
@@ -87,17 +99,33 @@ impl futures::Future for ClientGreeter {
                 }),
             },
             // If no packet was received yet
-            futures::Async::NotReady => return Ok(futures::Async::NotReady),
+            futures::Async::NotReady => {
+                // If connect delay expired
+                if let futures::Async::Ready(_) = self.expire_delay.poll()? {
+                    // Keepalive reached
+                    println!("Client connection expired. Closing socket.");
+
+                    // Return Ready so that the scheduler kills us.
+                    return Err(NamedClientError {
+                        name: None,
+                        error: ClientError::ConnectTimeout,
+                    });
+                // If connect delay expired
+                } else {
+                    return Ok(futures::Async::NotReady);
+                }
+            },
         };
 
         // On valid packet
         let mut client_maintainer = match packet {
             codec::Packet::Connect { name } => {
                 match self.stream.take() {
-                    Some(stream) => ClientMaintainer {
+                    Some(stream) => ClientMaintainer::new(
                         stream,
                         name,
-                    },
+                        self.keepalive,
+                    ),
 
                     // Not supposed to happen
                     None => panic!("We don't have a stream anymore!"),
@@ -135,6 +163,25 @@ impl futures::Future for ClientGreeter {
 struct ClientMaintainer {
     stream: tokio::codec::Framed<tokio::net::TcpStream, codec::Codec>,
     name: String,
+    keepalive: u64,
+    keepalive_delay: tokio::timer::Delay,
+}
+
+impl ClientMaintainer {
+    fn new(
+        stream: tokio::codec::Framed<tokio::net::TcpStream, codec::Codec>,
+        name: String,
+        keepalive: u64,
+    ) -> Self {
+        Self {
+            stream,
+            name,
+            keepalive,
+            keepalive_delay: tokio::timer::Delay::new(
+                Instant::now() + Duration::from_secs(keepalive),
+            ),
+        }
+    }
 }
 
 impl futures::Future for ClientMaintainer {
@@ -161,6 +208,12 @@ impl futures::Future for ClientMaintainer {
         }
 
         // TODO Add keepalive management
+        if let futures::Async::Ready(_) = self.keepalive_delay.poll()? {
+            return Err(NamedClientError {
+                name: Some(self.name.clone()),
+                error: ClientError::Keepalive,
+            });
+        }
 
         // Wait for next event
         Ok(futures::Async::NotReady)
